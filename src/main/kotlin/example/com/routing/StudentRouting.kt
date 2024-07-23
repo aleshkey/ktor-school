@@ -9,7 +9,7 @@ import example.com.service.StudentService
 var studentRepository = StudentRepository()
 var studentService = StudentService(studentRepository)
 
-fun Application.addStudentRoutes () {
+fun Application.studentRoutes () {
     routing {
         get ("api/v1/students") {
             val res = studentService.getAll()

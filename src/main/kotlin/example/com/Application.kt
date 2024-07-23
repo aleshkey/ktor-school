@@ -1,7 +1,6 @@
 package example.com
 
-import example.com.plugins.*
-import example.com.routing.addStudentRoutes
+import example.com.routing.studentRoutes
 import io.ktor.server.application.*
 import org.modsen.config.DatabaseConfig
 
@@ -12,8 +11,5 @@ fun main(args: Array<String>) {
 fun Application.module() {
     DatabaseConfig.init(environment)
 
-    addStudentRoutes()
-    configureSerialization()
-    configureDatabases()
-    configureRouting()
+    studentRoutes()
 }
