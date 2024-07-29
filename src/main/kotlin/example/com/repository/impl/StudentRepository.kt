@@ -1,6 +1,6 @@
 package example.com.repository.impl
 
-import org.modsen.config.DatabaseConfig
+import example.com.config.DatabaseConfig
 import example.com.model.Stream
 import example.com.model.Student
 import example.com.repository.CrudRepository
@@ -52,13 +52,13 @@ class StudentRepository: CrudRepository<Student, Long> {
                 .bind("lastName", entity.lastName)
                 .bind("email", entity.email)
                 .bind("age", entity.age)
-                .bind("streamId", entity.stream.id)
+                .bind("streamId", entity.stream!!.id)
                 .execute()
         }
         return entity
     }
 
-    override suspend  fun deleteById(id: Long) {
+    override fun deleteById(id: Long) {
         jdbi.useHandle<Exception> { handle ->
             handle.createUpdate("DELETE FROM students WHERE id = :id")
                 .bind("id", id)
@@ -66,24 +66,23 @@ class StudentRepository: CrudRepository<Student, Long> {
         }
     }
 
-    override suspend  fun save(entity: Student): Student {
+    override fun save(entity: Student): Student {
         jdbi.useHandle<Exception> { handle ->
             handle.createUpdate("""
-                INSERT INTO students (id, first_name, last_name, email, age, stream_id)
-                VALUES (:id, :firstName, :lastName, :email, :age, :streamId)
+                INSERT INTO students (first_name, last_name, email, age, stream_id)
+                VALUES (:firstName, :lastName, :email, :age, :stream)
             """)
-                .bind("id", entity.id)
                 .bind("firstName", entity.firstName)
                 .bind("lastName", entity.lastName)
                 .bind("email", entity.email)
                 .bind("age", entity.age)
-                .bind("streamId", entity.stream.id)
+                .bind("stream", entity.stream!!.id)
                 .execute()
         }
         return entity
     }
 
-    override suspend  fun findById(id: Long): Student? {
+    override suspend fun findById(id: Long): Student? {
         return jdbi.withHandle<Student?, Exception> { handle ->
             val query = """
                 SELECT s.id AS student_id, s.first_name, s.last_name, s.email, s.age,

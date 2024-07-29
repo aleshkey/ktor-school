@@ -1,13 +1,10 @@
-package org.modsen.config
+package example.com.config
 
-import com.typesafe.config.ConfigFactory
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import io.ktor.server.application.*
-import io.ktor.server.config.*
-import org.jdbi.v3.core.Jdbi
-import io.ktor.server.application.ApplicationEnvironment
 import io.ktor.server.config.ApplicationConfig
+import org.jdbi.v3.core.Jdbi
 
 object DatabaseConfig {
     private var config: ApplicationConfig? = null
@@ -21,7 +18,7 @@ object DatabaseConfig {
             driverClassName = config!!.property("ktor.database.driverClassName").getString()
         }
         val dataSource = HikariDataSource(dbConfig)
-        DatabaseConfig.jdbi = Jdbi.create(dataSource)
+        jdbi = Jdbi.create(dataSource)
     }
 
     var jdbi: Jdbi? = null

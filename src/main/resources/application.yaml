@@ -9,3 +9,13 @@ ktor:
         username: "aleshkey"
         password: "123456789"
         driverClassName: "org.postgresql.Driver"
+
+rabbitmq:
+    host: "localhost"
+    port: 5672
+    virtualHost: "/"
+    username: "guest"
+    password: "guest"
+    exchange: "ktor-school-exchange"
+    queue: "students-creation-queue"
+    key: "testKey"

@@ -1,9 +1,9 @@
-package example.com.payload
+package example.com.payload.response.student
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class StudentResponse(
+data class StudentResponse (
     val id: Long,
     val firstName: String,
     val lastName: String,

@@ -6,10 +6,10 @@ interface CrudRepository <T, I> {
 
     suspend fun findById(id: I): T?
 
-    suspend fun save(entity: T): T
+    fun save(entity: T): T
 
     suspend fun update(entity: T): T
 
-    suspend fun deleteById(id: I)
+    fun deleteById(id: I)
 
 }

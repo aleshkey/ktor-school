@@ -17,3 +17,10 @@ services:
     environment:
       - POSTGRES_PASSWORD=123456789
       - POSTGRES_USER=aleshkey
+
+  rabbit:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
