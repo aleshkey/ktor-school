@@ -29,7 +29,7 @@ class RabbitService {
             RabbitConstants.DEFAULT_EXCHANGE,
             RabbitConstants.DEFAULT_KEY,
             null,
-            mapper.writeValueAsBytes(message)  // Convert the message to JSON bytes
+            mapper.writeValueAsBytes(message)
         )
 
         channel.close()
@@ -45,7 +45,6 @@ class RabbitService {
             val deliverCallback = DeliverCallback { _: String?, message: Delivery? ->
 
                 try {
-                    // Convert the byte array to a JSON string, then deserialize it
                     val jsonString = String(message!!.body)
                     val obj: RabbitMessage<Any> = mapper.readValue(jsonString)
                     handler.handle(obj)
