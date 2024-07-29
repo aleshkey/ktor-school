@@ -2,13 +2,13 @@ package example.com.repository
 
 interface CrudRepository <T, I> {
 
-    suspend fun findAll(): List<T>
+    fun findAll(): List<T>
 
-    suspend fun findById(id: I): T?
+    fun findById(id: I): T?
 
     fun save(entity: T): T
 
-    suspend fun update(entity: T): T
+    fun update(entity: T): T
 
     fun deleteById(id: I)
 

@@ -7,7 +7,7 @@ import example.com.repository.impl.StudentRepository
 
 class StudentService(private val studentRepository: StudentRepository) {
 
-    suspend fun getAll(): List<StudentResponse> =
+    fun getAll(): List<StudentResponse> =
         studentRepository.findAll().map { it.toResponse() }
 
     fun saveStudent(studentRequest: StudentRequest){
@@ -19,7 +19,7 @@ class StudentService(private val studentRepository: StudentRepository) {
         studentRepository.deleteById(id)
     }
 
-    suspend fun getById(id: Long): StudentResponse {
+    fun getById(id: Long): StudentResponse {
         return studentRepository.findById(id)!!.toResponse()
     }
 

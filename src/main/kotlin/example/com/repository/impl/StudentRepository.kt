@@ -9,7 +9,7 @@ class StudentRepository: CrudRepository<Student, Long> {
 
     private val jdbi = DatabaseConfig.jdbi!!
 
-    override suspend fun findAll(): List<Student> {
+    override fun findAll(): List<Student> {
         return jdbi.withHandle<List<Student>, Exception> { handle ->
             val query = """
                 SELECT s.id AS student_id, s.first_name, s.last_name, s.email, s.age,
@@ -36,7 +36,7 @@ class StudentRepository: CrudRepository<Student, Long> {
         }
     }
 
-    override suspend  fun update(entity: Student): Student {
+    override fun update(entity: Student): Student {
         jdbi.useHandle<Exception> { handle ->
             handle.createUpdate("""
                 UPDATE students
@@ -82,7 +82,7 @@ class StudentRepository: CrudRepository<Student, Long> {
         return entity
     }
 
-    override suspend fun findById(id: Long): Student? {
+    override fun findById(id: Long): Student? {
         return jdbi.withHandle<Student?, Exception> { handle ->
             val query = """
                 SELECT s.id AS student_id, s.first_name, s.last_name, s.email, s.age,
