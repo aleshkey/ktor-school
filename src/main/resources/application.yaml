@@ -1,0 +1,21 @@
+ktor:
+    application:
+        modules:
+            - example.com.ApplicationKt.module
+    deployment:
+        port: 8080
+    database:
+        jdbcUrl: "jdbc:postgresql://localhost:5434/students_db"
+        username: "aleshkey"
+        password: "123456789"
+        driverClassName: "org.postgresql.Driver"
+
+rabbitmq:
+    host: "localhost"
+    port: 5672
+    virtualHost: "/"
+    username: "guest"
+    password: "guest"
+    exchange: "ktor-school-exchange"
+    queue: "students-creation-queue"
+    key: "testKey"

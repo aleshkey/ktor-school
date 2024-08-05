@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+
+  postgres:
+    container_name: postgresql
+    image: 'postgres:latest'
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U aleshkey" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - './initdb:/docker-entrypoint-initdb.d'
+    ports:
+      - "5434:5432"
+    environment:
+      - POSTGRES_PASSWORD=123456789
+      - POSTGRES_USER=aleshkey
+
+  rabbit:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
