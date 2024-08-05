@@ -1,13 +1,16 @@
 package example.com.repository.impl
 
-import example.com.config.DatabaseConfig
 import example.com.model.Stream
 import example.com.model.Student
 import example.com.repository.CrudRepository
+import org.jdbi.v3.core.Jdbi
+import org.jdbi.v3.core.kotlin.bindKotlin
 
-class StudentRepository: CrudRepository<Student, Long> {
+class StudentRepository(
+    private val jdbi: Jdbi
+): CrudRepository<Student, Long> {
 
-    private val jdbi = DatabaseConfig.jdbi!!
+
 
     override fun findAll(): List<Student> {
         return jdbi.withHandle<List<Student>, Exception> { handle ->
@@ -47,12 +50,7 @@ class StudentRepository: CrudRepository<Student, Long> {
                     stream_id = :streamId
                 WHERE id = :id
             """)
-                .bind("id", entity.id)
-                .bind("firstName", entity.firstName)
-                .bind("lastName", entity.lastName)
-                .bind("email", entity.email)
-                .bind("age", entity.age)
-                .bind("streamId", entity.stream!!.id)
+                .bindKotlin(entity)
                 .execute()
         }
         return entity
@@ -72,11 +70,7 @@ class StudentRepository: CrudRepository<Student, Long> {
                 INSERT INTO students (first_name, last_name, email, age, stream_id)
                 VALUES (:firstName, :lastName, :email, :age, :stream)
             """)
-                .bind("firstName", entity.firstName)
-                .bind("lastName", entity.lastName)
-                .bind("email", entity.email)
-                .bind("age", entity.age)
-                .bind("stream", entity.stream!!.id)
+                .bindKotlin(entity)
                 .execute()
         }
         return entity
@@ -107,8 +101,7 @@ class StudentRepository: CrudRepository<Student, Long> {
                         stream = stream
                     )
                 }
-                .findFirst()
-                .orElse(null)
+                .firstOrNull()
         }
     }
 }

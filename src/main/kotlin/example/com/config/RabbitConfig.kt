@@ -5,7 +5,7 @@ import example.com.constants.RabbitConstants
 
 object RabbitConfig {
 
-    private var connectionFactory: ConnectionFactory = ConnectionFactory()
+    private val connectionFactory: ConnectionFactory = ConnectionFactory()
 
     init {
         connectionFactory.host = "localhost"

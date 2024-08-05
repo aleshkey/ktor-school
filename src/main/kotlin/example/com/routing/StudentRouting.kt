@@ -1,6 +1,7 @@
 package example.com.routing
 
 import example.com.client.MockClient
+import example.com.config.DatabaseConfig
 import example.com.payload.rabbit.DeleteStudentMessage
 import example.com.payload.rabbit.enums.MessageStatus
 import example.com.payload.request.student.StudentRequest
@@ -14,7 +15,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-var studentRepository = StudentRepository()
+var studentRepository = StudentRepository(DatabaseConfig.jdbi!!)
 var studentService = StudentService(studentRepository)
 var rabbitService = RabbitService()
 

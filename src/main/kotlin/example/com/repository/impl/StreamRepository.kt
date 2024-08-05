@@ -1,17 +1,13 @@
 package example.com.repository.impl
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
-import example.com.config.DatabaseConfig
 import example.com.model.Stream
 import example.com.payload.response.stream.StreamListResponse
 import example.com.payload.response.stream.StreamResponse
-import org.postgresql.util.PGobject
+import org.jdbi.v3.core.Jdbi
 
-class StreamRepository {
-
-    private val jdbi = DatabaseConfig.jdbi!!
-    private val objectMapper = jacksonObjectMapper()
+class StreamRepository (
+    private val jdbi: Jdbi
+) {
 
     fun getById(id: Long): List<StreamResponse>? {
         return jdbi.withHandle<List<StreamResponse>?, Exception> { handle ->
@@ -23,17 +19,8 @@ class StreamRepository {
             GROUP BY s.name;
         """)
                 .bind("id", id)
-                .mapToMap()
-                .map { row ->
-                    val studentNamesJson = row["student_names"] as PGobject
-                    val studentNames: List<String> = objectMapper.readValue(studentNamesJson.value ?: "[]")
-
-                    StreamResponse(
-                        size = row["size"] as Long,
-                        name = row["stream_name"] as String,
-                        students = studentNames
-                    )
-                }
+                .mapTo(StreamResponse::class.java)
+                .list()
         }
     }
 
@@ -68,8 +55,7 @@ class StreamRepository {
                         name = rs.getString("name")
                     )
                 }
-                .findFirst()
-                .orElse(null)
+                .firstOrNull()
         }
     }
 

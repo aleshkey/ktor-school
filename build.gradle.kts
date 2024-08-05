@@ -36,6 +36,8 @@ dependencies {
     implementation("io.ktor:ktor-client-logging:2.3.12")
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("org.jdbi:jdbi3:3.0.0-beta2")
+    implementation ("org.jdbi:jdbi3-kotlin:3.27.0")
+    implementation ("org.jdbi:jdbi3-kotlin-sqlobject:3.27.0")
     implementation("com.rabbitmq:amqp-client:5.17.1")
     implementation("io.ktor:ktor-server-netty-jvm")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
